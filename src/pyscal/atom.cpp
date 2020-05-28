@@ -41,18 +41,19 @@ Atom::Atom( vector<double> pos, int idd, int typ){
 
     }
 
-    for (int tn = 0; tn<11; tn++){
-        q[tn] = -1;
-        aq[tn] = -1;
+    for (int t =0; t < MAXRADFUNCS; t++){
+      for (int tn = 0; tn<11; tn++){
+          q[t][tn] = -1;
+          aq[t][tn] = -1;
 
-        for (int tnn =0; tnn<25; tnn++){
-            realq[tn][tnn] = -1;
-            imgq[tn][tnn] = -1;
-            arealq[tn][tnn] = -1;
-            aimgq[tn][tnn] = -1;
-        }
+          for (int tnn =0; tnn<25; tnn++){
+              realq[t][tn][tnn] = -1;
+              imgq[t][tn][tnn] = -1;
+              arealq[t][tn][tnn] = -1;
+              aimgq[t][tn][tnn] = -1;
+          }
+      }
     }
-
 }
 
 Atom::~Atom(){ }
@@ -133,31 +134,41 @@ void Atom::scondition(int idd){ condition=idd; }
 int Atom::gcondition(){ return condition; }
 
 vector<double> Atom::gallq(){
-    vector<double> allq;
-    for(int i=0; i<11; i++){
-        allq.emplace_back(q[i]);
+    vector<vector<double>> allq;
+    allq.resize(MAXRADFUNCS);
+    for(int n=0; n<MAXRADFUNCS; n++){
+      for(int i=0; i<11; i++){
+          allq[n].emplace_back(q[i]);
+      }
     }
     return allq;
 }
 
-vector<double> Atom::gallaq(){
-    vector<double> allq;
-    for(int i=0; i<11; i++){
-        allq.emplace_back(aq[i]);
+vector<vector<double>> Atom::gallaq(){
+    vector<vector<double>> allq;
+    allq.resize(MAXRADFUNCS);
+    for(int n=0; n<MAXRADFUNCS; n++){
+      for(int i=0; i<11; i++){
+          allq.emplace_back(aq[i]);
+      }
     }
     return allq;
 }
 
-void Atom::sallq(vector<double> allq){
+void Atom::sallq(vector<vector<double>> allq){
+  for(int n=0; n<MAXRADFUNCS; n++){
     for(int i=0; i<11; i++){
-        q[i] = allq[i];
+        q[n][i] = allq[n][i];
     }
+  }
 }
 
-void Atom::sallaq(vector<double> allaq){
+void Atom::sallaq(vector<vector<double>> allaq){
+  for(int n=0; n<MAXRADFUNCS; n++){
     for(int i=0; i<11; i++){
-        aq[i] = allaq[i];
+        aq[n][i] = allaq[n][i];
     }
+  }
 }
 
 //aceesss funcs
@@ -209,32 +220,32 @@ void Atom::scustom(py::dict cc){
 
 
 //for q vals
-double Atom::gq(int qq){ return q[qq-2]; }
-void Atom::sq(int qq, double qval){ q[qq-2] = qval; }
+double Atom::gq(int qq, int n){ return q[n][qq-2]; }
+void Atom::sq(int qq, double qval, int n){ q[n][qq-2] = qval; }
 
-double Atom::gaq(int qq){ return aq[qq-2]; }
-void Atom::saq(int qq, double qval){ aq[qq-2] = qval; }
+double Atom::gaq(int qq, int n){ return aq[n][qq-2]; }
+void Atom::saq(int qq, double qval, int n){ aq[n][qq-2] = qval; }
 
-double Atom::gq_big(int qval, bool averaged){
+double Atom::gq_big(int qval, int n, bool averaged){
 
     if ((qval < 2) || (qval > 12)){
         throw invalid_argument("q value should be between 2-12");
     }
-    if(averaged == true) { return gaq(qval);}
-    else {return gq(qval);}
+    if(averaged == true) { return gaq(qval, n);}
+    else {return gq(qval, n);}
 }
 
-void Atom::sq_big(int qval, double val,  bool averaged){
+void Atom::sq_big(int qval, double val,  int n, bool averaged){
 
     if ((qval < 2) || (qval > 12)){
         throw invalid_argument("q value should be between 2-12");
     }
-    if(averaged == true) { saq(qval, val);}
-    else { sq(qval, val);}
+    if(averaged == true) { saq(qval, val, n);}
+    else { sq(qval, val, n);}
 }
 
 //overloaded version which takes a vector
-vector<double> Atom::gq_big(vector<int> qval, bool averaged ){
+vector<double> Atom::gq_big(vector<int> qval, int n, bool averaged ){
     int d;
     if(averaged == true) {
         vector<double> retvals;
@@ -242,7 +253,7 @@ vector<double> Atom::gq_big(vector<int> qval, bool averaged ){
             if ((qval[i] < 2) || (qval[i] > 12)){
                 throw invalid_argument("q value should be between 2-12");
             }
-            retvals.push_back(gaq(qval[i]));
+            retvals.push_back(gaq(qval[i], n));
         }
         return retvals;
     }
@@ -252,14 +263,14 @@ vector<double> Atom::gq_big(vector<int> qval, bool averaged ){
             if ((qval[i] < 2) || (qval[i] > 12)){
                 throw invalid_argument("q value should be between 2-12");
             }
-            retvals.push_back(gq(qval[i]));
+            retvals.push_back(gq(qval[i], n));
         }
         return retvals;
     }
 }
 
 //overloaded version which takes a vector
-void Atom::sq_big(vector<int> qval, vector<double> setvals, bool averaged){
+void Atom::sq_big(vector<int> qval, vector<double> setvals, int n, bool averaged){
 
     if(averaged == true) {
 
@@ -268,7 +279,7 @@ void Atom::sq_big(vector<int> qval, vector<double> setvals, bool averaged){
                 throw invalid_argument("q value should be between 2-12");
             }
 
-            saq(qval[i], setvals[i]);
+            saq(qval[i], setvals[i], n);
         }
     }
     else {
@@ -277,7 +288,7 @@ void Atom::sq_big(vector<int> qval, vector<double> setvals, bool averaged){
             if ((qval[i] < 2) || (qval[i] > 12)){
                 throw invalid_argument("q value should be between 2-12");
             }
-            sq(qval[i], setvals[i]);
+            sq(qval[i], setvals[i], n);
         }
     }
 }
@@ -442,19 +453,19 @@ void Atom::ssro(vector<double> dd){
     sro = dd;
 }
 
-vector<complex<double>> Atom::get_qcomps(int qq, bool averaged){
+vector<complex<double>> Atom::get_qcomps(int qq, int n, bool averaged){
 
   vector<complex<double>> qlms;
   qlms.reserve(2*qq+1);
   if (!averaged){
     for(int i=0;i<(2*qq+1);i++){
-        complex<double> lmval(realq[qq-2][i], imgq[qq-2][i]);
+        complex<double> lmval(realq[n][qq-2][i], imgq[n][qq-2][i]);
         qlms.emplace_back(lmval);
     }
   }
   else{
     for(int i=0;i<(2*qq+1);i++){
-        complex<double> lmval(arealq[qq-2][i], aimgq[qq-2][i]);
+        complex<double> lmval(arealq[n][qq-2][i], aimgq[n][qq-2][i]);
         qlms.emplace_back(lmval);
     }
   }

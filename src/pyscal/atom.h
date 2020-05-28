@@ -20,7 +20,7 @@ using namespace std;
 const double PI = 3.141592653589793;
 const int MAXNUMBEROFNEIGHBORS = 100;
 const int NILVALUE = 333333;
-
+const int MAXRADFUNCS = 10;
 //create a structure for sorting
 struct datom{
     double dist;
@@ -193,29 +193,29 @@ class Atom{
         //vector<double> gx();
         //variables for storing q2-12
         //invidual variables or arrays - individual ones are easier!
-        double q[11];
-        double aq[11];
+        double q[MAXRADFUNCS][11];
+        double aq[MAXRADFUNCS][11];
 
         //access functions are to be added
-        double realq[11][25];
-        double imgq[11][25];
-        double arealq[11][25];
-        double aimgq[11][25];
-        vector<complex<double>> get_qcomps(int, bool);
+        double realq[MAXRADFUNCS][11][25];
+        double imgq[MAXRADFUNCS][11][25];
+        double arealq[MAXRADFUNCS][11][25];
+        double aimgq[MAXRADFUNCS][11][25];
+        vector<complex<double>> get_qcomps(int, int, bool);
 
 
-        vector<double> gallq();
-        vector<double> gallaq();
-        void sallq(vector<double>);
-        void sallaq(vector<double>);
+        vector<vector<double>> gallq();
+        vector<vector<double>> gallaq();
+        void sallq(vector<vector<double>>);
+        void sallaq(vector<vector<double>>);
 
-        double gq(int);
-        void sq(int, double);
+        double gq(int, int);
+        void sq(int, double, int);
 
-        double gq_big(int, bool);
-        void sq_big( int, double, bool);
-        vector<double> gq_big(vector<int>, bool);
-        void sq_big(vector<int>, vector<double>, bool);
+        double gq_big(int, int, bool);
+        void sq_big( int, double, int, bool);
+        vector<double> gq_big(vector<int>,int,  bool);
+        void sq_big(vector<int>, vector<double>, int, bool);
 
         //vector <vector<double>> gqlm(int);
 
@@ -274,4 +274,7 @@ class Atom{
         vector<double> sro;
         vector<double> gsro();
         void ssro(vector<double>);
+
+        //additions for version 3
+        int rad; //indicates if radial params are calculated or not
 };

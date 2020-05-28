@@ -255,7 +255,7 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
 
     )mydelimiter")
 
-    .def("get_q", (double (Atom::*) (int q, bool))  &Atom::gq_big,  py::arg(), py::arg("averaged")=false, R"mydelimiter(
+    .def("get_q", (double (Atom::*) (int q, int, bool))  &Atom::gq_big,  py::arg(), py::arg("n")=0, py::arg("averaged")=false, R"mydelimiter(
           Calculate the steinhardt parameter q_l value.
 
           Parameters
@@ -281,9 +281,9 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
           Meaningful values are only returned if :func:`~pyscal.core.System.calculate_q` is used.
     )mydelimiter")
 
-    .def("get_q", (vector<double> (Atom::*) (vector<int>, bool))  &Atom::gq_big, py::arg(), py::arg("averaged")=false )
+    .def("get_q", (vector<double> (Atom::*) (vector<int>, int, bool))  &Atom::gq_big, py::arg(), py::arg("n")=0, py::arg("averaged")=false )
 
-    .def("set_q", (void (Atom::*) (int, double, bool))  &Atom::sq_big, py::arg(), py::arg(), py::arg("averaged")=false, R"mydelimiter(
+    .def("set_q", (void (Atom::*) (int, double, int, bool))  &Atom::sq_big, py::arg(), py::arg(), py::arg("n")=0, py::arg("averaged")=false, R"mydelimiter(
 
           Set the value of steinhardt parameter q_l.
 
@@ -306,7 +306,7 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
 
     )mydelimiter")
 
-    .def("set_q", (void (Atom::*) (vector<int>, vector<double>, bool))  &Atom::sq_big, py::arg(), py::arg(), py::arg("averaged")=false)
+    .def("set_q", (void (Atom::*) (vector<int>, vector<double>, int, bool))  &Atom::sq_big, py::arg(), py::arg(), py::arg("n")=0, py::arg("averaged")=false)
 
 
     .def_property("angular",&Atom::gangular, &Atom::sangular, R"mydelimiter(
@@ -341,7 +341,7 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
         The value of short range order parameter.
     )mydelimiter")
 
-    .def("get_qlm", &Atom::get_qcomps, py::arg(), py::arg("averaged")=false, R"mydelimiter(
+    .def("get_qlm", &Atom::get_qcomps, py::arg(), py::arg("n")=0, py::arg("averaged")=false, R"mydelimiter(
           Get the q_lm values.
 
           Parameters
