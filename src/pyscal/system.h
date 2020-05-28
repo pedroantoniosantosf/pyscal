@@ -170,5 +170,9 @@ class System{
         void calculate_disorder();
         void find_average_disorder();
 
+        //now ACE parameters
+        
+
+
 
 };

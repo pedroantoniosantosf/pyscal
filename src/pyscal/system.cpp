@@ -1740,15 +1740,7 @@ vector<vector<double>> System::gbox(){
     }
     return qres;
 }
-/*
-vector<double> System::gboxdims(){
-    vector<double> qres;
-    qres.reserve(6);
-    for(int i=0;i<3;i++){
-        for(int j=0;j<2;j++){
-            qres.emplace_back(boxdims[i][j]);
-        }
-    }
-    return qres;
-}
-*/
+
+//----------------------------------------------------------
+//ACE Methods
+//----------------------------------------------------------

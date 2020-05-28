@@ -362,6 +362,22 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
           Meaningful values are only returned if :func:`~pyscal.core.System.calculate_q` is used.
     )mydelimiter")
 
+    //NEW v3 methods and variables
+    .def_readwrite("nradials", &Atom::n, R"mydelimiter(
+        *Int*.
+        Number of radial functions
+    )mydelimiter")
+
+    .def_readwrite("nchebs", &Atom::k, R"mydelimiter(
+        *Int*.
+        Number of Chebyshev polynomials
+    )mydelimiter")
+
+    .def_readwrite("decay", &Atom::lmb, R"mydelimiter(
+        *Float*.
+        Exponential decay for scaled distances
+    )mydelimiter")
+
     ;
 
 

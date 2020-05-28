@@ -475,3 +475,35 @@ vector<complex<double>> Atom::get_qcomps(int qq, int n, bool averaged){
   }
   return qlms;
 }
+
+
+//NEW ACE methods
+
+void Atom::calculate_cheb(double x){
+  //set the first two
+  chebs[0] = 1.00;
+  chebs[1] = x;
+
+  for(int i=2; i<n; i++){
+    chebs[i] = 2*x*chebs[i-1] - chebs[i-2];
+  }
+}
+
+void Atom::calculate_gks(double r){
+  //lmb is lambda the exponential decay
+  //r is the interatomic distance
+  double factor = 1.0 + cos(PI*(r/cutoff));
+  gks[0] = 1.00;
+  gks[1] = factor;
+
+  //scaled distances
+  double num = (exp(-1*l*((r/cutoff) - 1)) - 1.)/(exp(l) - 1.);
+  double x = 1.0 - 2.0*num;
+
+  //now calculate chebs
+  calculate_cheb(x);
+
+  for(int i=2; i<n; i++){
+    gks[i] = 0.25*factor*(1.0 - chebs[i-1]);
+  }
+}

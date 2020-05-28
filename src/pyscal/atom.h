@@ -276,5 +276,12 @@ class Atom{
         void ssro(vector<double>);
 
         //additions for version 3
-        int rad; //indicates if radial params are calculated or not
+        int n; //number of radial functions
+        int k; //number of Chebyshev polynomials
+        double lmb; //lambda -we should unlock all of these variables
+
+        double chebs[100];
+        double gks[100];
+        void calculate_cheb(double);
+        void calculate_gk(double);
 };
