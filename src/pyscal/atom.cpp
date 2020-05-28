@@ -135,24 +135,28 @@ int Atom::gcondition(){ return condition; }
 
 vector<vector<double>> Atom::gallq(){
     vector<vector<double>> allq;
-    allq.resize(MAXRADFUNCS);
+    vector<double> dummy;
     for(int n=0; n<MAXRADFUNCS; n++){
+      dummy.clear();
       for(int i=0; i<11; i++){
-          allq[n].emplace_back(q[n][i]);
+          dummy.emplace_back(q[n][i]);
       }
+      allq.emplace_back(dummy);
     }
     return allq;
 }
 
 vector<vector<double>> Atom::gallaq(){
-    vector<vector<double>> allq;
-    allq.resize(MAXRADFUNCS);
-    for(int n=0; n<MAXRADFUNCS; n++){
-      for(int i=0; i<11; i++){
-          allq.emplace_back(aq[n][i]);
-      }
+  vector<vector<double>> allq;
+  vector<double> dummy;
+  for(int n=0; n<MAXRADFUNCS; n++){
+    dummy.clear();
+    for(int i=0; i<11; i++){
+        dummy.emplace_back(aq[n][i]);
     }
-    return allq;
+    allq.emplace_back(dummy);
+  }
+  return allq;
 }
 
 void Atom::sallq(vector<vector<double>> allq){

@@ -33,8 +33,8 @@ class pickleAtom:
         self.largest_cluster = 0
         self.structure = 0
         self.loc = 0
-        self.allq = []
-        self.allaq = []
+        self.allq = None
+        self.allaq = None
         self.type = 0
         self.custom = {}
         self.volume = 0
@@ -84,7 +84,8 @@ def pickle_atom(atom):
     patom.vertex_vectors = atom.vertex_vectors
     patom.edge_lengths = atom.edge_lengths
     patom.vorovector = atom.vorovector
-    patom.avg_connection = atom.avg_connection
+    patom.sij = atom.sij
+    patom.avg_sij = atom.avg_sij
 
     return patom
 
@@ -126,7 +127,8 @@ def unpickle_atom(atom):
     patom.vertex_vectors = atom.vertex_vectors
     patom.edge_lengths = atom.edge_lengths
     patom.vorovector = atom.vorovector
-    patom.avg_connection = atom.avg_connection
+    patom.sij = atom.sij
+    patom.avg_sij = atom.avg_sij
 
     return patom
 
