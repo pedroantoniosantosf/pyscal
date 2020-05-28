@@ -133,12 +133,12 @@ void Atom::sstructure(int idd){ structure=idd; }
 void Atom::scondition(int idd){ condition=idd; }
 int Atom::gcondition(){ return condition; }
 
-vector<double> Atom::gallq(){
+vector<vector<double>> Atom::gallq(){
     vector<vector<double>> allq;
     allq.resize(MAXRADFUNCS);
     for(int n=0; n<MAXRADFUNCS; n++){
       for(int i=0; i<11; i++){
-          allq[n].emplace_back(q[i]);
+          allq[n].emplace_back(q[n][i]);
       }
     }
     return allq;
@@ -149,7 +149,7 @@ vector<vector<double>> Atom::gallaq(){
     allq.resize(MAXRADFUNCS);
     for(int n=0; n<MAXRADFUNCS; n++){
       for(int i=0; i<11; i++){
-          allq.emplace_back(aq[i]);
+          allq.emplace_back(aq[n][i]);
       }
     }
     return allq;

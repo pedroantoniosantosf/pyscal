@@ -1203,8 +1203,8 @@ void System::calculate_complexQLM_6(){
 
             realti = realti/(double(nn));
             imgti = imgti/(double(nn));
-            atoms[ti].realq[4][mi+6] = realti;
-            atoms[ti].imgq[4][mi+6] = imgti;
+            atoms[ti].realq[0][4][mi+6] = realti;
+            atoms[ti].imgq[0][4][mi+6] = imgti;
         }
     }
 }
@@ -1225,13 +1225,13 @@ void System::calculate_q(vector <int> qs){
     for(int ti=0;ti<nop;ti++){
         for(int tj=0;tj<11;tj++){
 
-            atoms[ti].q[tj] = -1;
-            atoms[ti].aq[tj] = -1;
+            atoms[ti].q[0][tj] = -1;
+            atoms[ti].aq[0][tj] = -1;
             for(int tk=0;tk<25;tk++){
-                atoms[ti].realq[tj][tk] = 0;
-                atoms[ti].imgq[tj][tk] = 0;
-                atoms[ti].arealq[tj][tk] = 0;
-                atoms[ti].aimgq[tj][tk] = 0;
+                atoms[ti].realq[0][tj][tk] = 0;
+                atoms[ti].imgq[0][tj][tk] = 0;
+                atoms[ti].arealq[0][tj][tk] = 0;
+                atoms[ti].aimgq[0][tj][tk] = 0;
             }
         }
     }
@@ -1273,15 +1273,15 @@ void System::calculate_q(vector <int> qs){
             }
 
 
-            atoms[ti].realq[q-2][mi+q] = realti;
-            atoms[ti].imgq[q-2][mi+q] = imgti;
+            atoms[ti].realq[0][q-2][mi+q] = realti;
+            atoms[ti].imgq[0][q-2][mi+q] = imgti;
 
             summ+= realti*realti + imgti*imgti;
             //summ+= realti;
             }
             //normalise summ
             summ = pow(((4.0*PI/(2*q+1)) * summ),0.5);
-            atoms[ti].q[q-2] = summ;
+            atoms[ti].q[0][q-2] = summ;
 
         }
 
@@ -1316,13 +1316,13 @@ void System::calculate_aq(vector <int> qs){
             //cout<<q<<endl;
             summ = 0;
             for (int mi = 0;mi < 2*q+1;mi++){
-                realti = atoms[ti].realq[q-2][mi];
-                imgti = atoms[ti].imgq[q-2][mi];
+                realti = atoms[ti].realq[0][q-2][mi];
+                imgti = atoms[ti].imgq[0][q-2][mi];
                 weightsum = 0;
                 for (int ci = 0;ci<nn;ci++){
 
-                    realti += atoms[atoms[ti].neighbors[ci]].realq[q-2][mi];
-                    imgti += atoms[atoms[ti].neighbors[ci]].imgq[q-2][mi];
+                    realti += atoms[atoms[ti].neighbors[ci]].realq[0][q-2][mi];
+                    imgti += atoms[atoms[ti].neighbors[ci]].imgq[0][q-2][mi];
                     weightsum += atoms[ti].neighborweight[ci];
                 }
 
@@ -1332,14 +1332,14 @@ void System::calculate_aq(vector <int> qs){
             realti = realti/(double(nn+1));
             imgti = imgti/(double(nn+1));
 
-            atoms[ti].arealq[q-2][mi] = realti;
-            atoms[ti].aimgq[q-2][mi] = imgti;
+            atoms[ti].arealq[0][q-2][mi] = realti;
+            atoms[ti].aimgq[0][q-2][mi] = imgti;
 
             summ+= realti*realti + imgti*imgti;
             }
             //normalise summ
             summ = pow(((4.0*PI/(2*q+1)) * summ),0.5);
-            atoms[ti].aq[q-2] = summ;
+            atoms[ti].aq[0][q-2] = summ;
 
         }
 
@@ -1362,9 +1362,9 @@ void System::calculate_disorder(){
         imgdotproduct = 0.0;
 
         for (int mi = 0;mi < 2*solidq+1 ;mi++){
-            sumSquareti += atoms[ti].realq[solidq-2][mi]*atoms[ti].realq[solidq-2][mi] + atoms[ti].imgq[solidq-2][mi] *atoms[ti].imgq[solidq-2][mi];
-            realdotproduct += atoms[ti].realq[solidq-2][mi]*atoms[ti].realq[solidq-2][mi];
-            imgdotproduct  += atoms[ti].imgq[solidq-2][mi] *atoms[ti].imgq[solidq-2][mi];
+            sumSquareti += atoms[ti].realq[0][solidq-2][mi]*atoms[ti].realq[0][solidq-2][mi] + atoms[ti].imgq[0][solidq-2][mi] *atoms[ti].imgq[0][solidq-2][mi];
+            realdotproduct += atoms[ti].realq[0][solidq-2][mi]*atoms[ti].realq[0][solidq-2][mi];
+            imgdotproduct  += atoms[ti].imgq[0][solidq-2][mi] *atoms[ti].imgq[0][solidq-2][mi];
         }
         connection = (realdotproduct+imgdotproduct)/(sqrt(sumSquareti)*sqrt(sumSquareti));
         atoms[ti].sii = connection;
@@ -1383,10 +1383,10 @@ void System::calculate_disorder(){
 
         for(int tj=0; tj<atoms[ti].n_neighbors; tj++){
             for (int mi = 0;mi < 2*solidq+1 ;mi++){
-                sumSquareti += atoms[ti].realq[solidq-2][mi]*atoms[ti].realq[solidq-2][mi] + atoms[ti].imgq[solidq-2][mi] *atoms[ti].imgq[solidq-2][mi];
-                sumSquaretj += atoms[tj].realq[solidq-2][mi]*atoms[tj].realq[solidq-2][mi] + atoms[tj].imgq[solidq-2][mi] *atoms[tj].imgq[solidq-2][mi];
-                realdotproduct += atoms[ti].realq[solidq-2][mi]*atoms[tj].realq[solidq-2][mi];
-                imgdotproduct  += atoms[ti].imgq[solidq-2][mi] *atoms[tj].imgq[solidq-2][mi];
+                sumSquareti += atoms[ti].realq[0][solidq-2][mi]*atoms[ti].realq[0][solidq-2][mi] + atoms[ti].imgq[0][solidq-2][mi] *atoms[ti].imgq[0][solidq-2][mi];
+                sumSquaretj += atoms[tj].realq[0][solidq-2][mi]*atoms[tj].realq[0][solidq-2][mi] + atoms[tj].imgq[0][solidq-2][mi] *atoms[tj].imgq[0][solidq-2][mi];
+                realdotproduct += atoms[ti].realq[0][solidq-2][mi]*atoms[tj].realq[0][solidq-2][mi];
+                imgdotproduct  += atoms[ti].imgq[0][solidq-2][mi] *atoms[tj].imgq[0][solidq-2][mi];
             }
             connection = (realdotproduct+imgdotproduct)/(sqrt(sumSquaretj)*sqrt(sumSquareti));
             dis += (atoms[ti].sii + atoms[tj].sii - 2*connection);
@@ -1440,10 +1440,10 @@ double System::get_number_from_bond(int ti,int tj){
 
     for (int mi = 0;mi < 2*solidq+1 ;mi++){
 
-        sumSquareti += atoms[ti].realq[solidq-2][mi]*atoms[ti].realq[solidq-2][mi] + atoms[ti].imgq[solidq-2][mi] *atoms[ti].imgq[solidq-2][mi];
-        sumSquaretj += atoms[tj].realq[solidq-2][mi]*atoms[tj].realq[solidq-2][mi] + atoms[tj].imgq[solidq-2][mi] *atoms[tj].imgq[solidq-2][mi];
-        realdotproduct += atoms[ti].realq[solidq-2][mi]*atoms[tj].realq[solidq-2][mi];
-        imgdotproduct  += atoms[ti].imgq[solidq-2][mi] *atoms[tj].imgq[solidq-2][mi];
+        sumSquareti += atoms[ti].realq[0][solidq-2][mi]*atoms[ti].realq[0][solidq-2][mi] + atoms[ti].imgq[0][solidq-2][mi] *atoms[ti].imgq[0][solidq-2][mi];
+        sumSquaretj += atoms[tj].realq[0][solidq-2][mi]*atoms[tj].realq[0][solidq-2][mi] + atoms[tj].imgq[0][solidq-2][mi] *atoms[tj].imgq[0][solidq-2][mi];
+        realdotproduct += atoms[ti].realq[0][solidq-2][mi]*atoms[tj].realq[0][solidq-2][mi];
+        imgdotproduct  += atoms[ti].imgq[0][solidq-2][mi] *atoms[tj].imgq[0][solidq-2][mi];
     }
 
     connection = (realdotproduct+imgdotproduct)/(sqrt(sumSquaretj)*sqrt(sumSquareti));
@@ -1464,10 +1464,10 @@ double System::get_number_from_bond(Atom atom1,Atom atom2){
 
     for (int mi = 0;mi < 2*solidq+1 ;mi++){
 
-        sumSquareti += atom1.realq[solidq-2][mi]*atom1.realq[solidq-2][mi] + atom1.imgq[solidq-2][mi] *atom1.imgq[solidq-2][mi];
-        sumSquaretj += atom2.realq[solidq-2][mi]*atom2.realq[solidq-2][mi] + atom2.imgq[solidq-2][mi] *atom2.imgq[solidq-2][mi];
-        realdotproduct += atom1.realq[solidq-2][mi]*atom2.realq[solidq-2][mi];
-        imgdotproduct  += atom1.imgq[solidq-2][mi] *atom2.imgq[solidq-2][mi];
+        sumSquareti += atom1.realq[0][solidq-2][mi]*atom1.realq[0][solidq-2][mi] + atom1.imgq[0][solidq-2][mi] *atom1.imgq[0][solidq-2][mi];
+        sumSquaretj += atom2.realq[0][solidq-2][mi]*atom2.realq[0][solidq-2][mi] + atom2.imgq[0][solidq-2][mi] *atom2.imgq[0][solidq-2][mi];
+        realdotproduct += atom1.realq[0][solidq-2][mi]*atom2.realq[0][solidq-2][mi];
+        imgdotproduct  += atom1.imgq[0][solidq-2][mi] *atom2.imgq[0][solidq-2][mi];
     }
 
     connection = (realdotproduct+imgdotproduct)/(sqrt(sumSquaretj)*sqrt(sumSquareti));
@@ -1673,7 +1673,7 @@ vector<double> System::gqvals(int qq){
     vector<double> qres;
     qres.reserve(nop);
     for(int i=0;i<nop;i++){
-        qres.emplace_back(atoms[i].q[qq-2]);
+        qres.emplace_back(atoms[i].q[0][qq-2]);
     }
 
     return qres;
@@ -1683,7 +1683,7 @@ vector<double> System::gaqvals(int qq){
     vector<double> qres;
     qres.reserve(nop);
     for(int i=0;i<nop;i++){
-        qres.emplace_back(atoms[i].aq[qq-2]);
+        qres.emplace_back(atoms[i].aq[0][qq-2]);
     }
 
     return qres;

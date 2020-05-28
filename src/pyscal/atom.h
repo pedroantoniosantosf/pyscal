@@ -219,14 +219,14 @@ class Atom{
 
         //vector <vector<double>> gqlm(int);
 
-        double gaq(int);
+        double gaq(int, int);
         int gid();
         void sid(int);
         int gloc();
         void sloc(int);
         int gtype();
         void stype(int);
-        void saq(int, double);
+        void saq(int, double, int);
         //vector <vector<double>> gaqlm(int);
 
         int gsolid();
