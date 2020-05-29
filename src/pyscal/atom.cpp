@@ -492,7 +492,7 @@ void Atom::calculate_cheb(double x){
 void Atom::calculate_gks(double r){
   //lmb is lambda the exponential decay
   //r is the interatomic distance
-  double factor = 1.0 + cos(PI*(r/cutoff));
+  double factor = 0.5*(1.0 + cos(PI*(r/cutoff)));
   gks[0] = 1.00;
   gks[1] = factor;
 
@@ -504,7 +504,7 @@ void Atom::calculate_gks(double r){
   calculate_cheb(x);
 
   for(int i=2; i<nk; i++){
-    gks[i] = 0.25*factor*(1.0 - chebs[i-1]);
+    gks[i] = 0.5*factor*(1.0 - chebs[i-1]);
   }
 }
 
