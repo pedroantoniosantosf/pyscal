@@ -484,7 +484,7 @@ void Atom::calculate_cheb(double x){
   chebs[0] = 1.00;
   chebs[1] = x;
 
-  for(int i=2; i<n; i++){
+  for(int i=2; i<nk; i++){
     chebs[i] = 2*x*chebs[i-1] - chebs[i-2];
   }
 }
@@ -497,13 +497,41 @@ void Atom::calculate_gks(double r){
   gks[1] = factor;
 
   //scaled distances
-  double num = (exp(-1*l*((r/cutoff) - 1)) - 1.)/(exp(l) - 1.);
+  double num = (exp(-1*lmb*((r/cutoff) - 1)) - 1.)/(exp(lmb) - 1.);
   double x = 1.0 - 2.0*num;
 
   //now calculate chebs
   calculate_cheb(x);
 
-  for(int i=2; i<n; i++){
+  for(int i=2; i<nk; i++){
     gks[i] = 0.25*factor*(1.0 - chebs[i-1]);
+  }
+}
+
+vector<double> Atom::gcheb(){
+  vector<double> rs;
+  for(int i=0; i<nk; i++){
+    rs.emplace_back(chebs[i]);
+  }
+  return rs;
+}
+
+void Atom::scheb(vector<double> rs){
+  for(int i=0; i<nk; i++){
+    chebs[i] = rs[i];
+  }
+}
+
+vector<double> Atom::ggks(){
+  vector<double> rs;
+  for(int i=0; i<nk; i++){
+    rs.emplace_back(gks[i]);
+  }
+  return rs;
+}
+
+void Atom::sgks(vector<double> rs){
+  for(int i=0; i<nk; i++){
+    gks[i] = rs[i];
   }
 }

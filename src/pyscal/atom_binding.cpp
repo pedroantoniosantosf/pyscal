@@ -363,12 +363,12 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
     )mydelimiter")
 
     //NEW v3 methods and variables
-    .def_readwrite("nradials", &Atom::n, R"mydelimiter(
+    .def_readwrite("nradials", &Atom::nr, R"mydelimiter(
         *Int*.
         Number of radial functions
     )mydelimiter")
 
-    .def_readwrite("nchebs", &Atom::k, R"mydelimiter(
+    .def_readwrite("nchebs", &Atom::nk, R"mydelimiter(
         *Int*.
         Number of Chebyshev polynomials
     )mydelimiter")
@@ -378,6 +378,25 @@ py::class_<Atom>(m,"Atom", R"mydelimiter(
         Exponential decay for scaled distances
     )mydelimiter")
 
+    .def("calculate_cheb", &Atom::calculate_cheb, R"mydelimiter(
+        *List of floats of the type [x, y, z], default [0, 0, 0]*.
+        Position of the atom.
+    )mydelimiter")
+
+    .def("calculate_gks", &Atom::calculate_gks, R"mydelimiter(
+        *List of floats of the type [x, y, z], default [0, 0, 0]*.
+        Position of the atom.
+    )mydelimiter")
+
+    .def_property("cheb",&Atom::gcheb, &Atom::scheb, R"mydelimiter(
+        *Float*.
+        The value of short range order parameter.
+    )mydelimiter")
+
+    .def_property("gk",&Atom::ggks, &Atom::sgks, R"mydelimiter(
+        *Float*.
+        The value of short range order parameter.
+    )mydelimiter")
     ;
 
 
