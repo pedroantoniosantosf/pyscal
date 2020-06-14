@@ -74,6 +74,7 @@ PYBIND11_MODULE(csystem, m) {
         .def("find_solid_atoms",&System::find_solid_atoms)
         .def("ccalculate_disorder",&System::calculate_disorder)
         .def("ccalculate_avg_disorder",&System::find_average_disorder)
+        .def("calculate_radial_functions",&System::calculate_radial_functions)
         ;
 
 

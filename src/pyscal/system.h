@@ -171,7 +171,8 @@ class System{
         void find_average_disorder();
 
         //now ACE parameters
-        
+        void calculate_radial_functions(int, int, double);
+
 
 
 

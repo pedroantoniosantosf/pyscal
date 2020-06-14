@@ -1209,6 +1209,34 @@ void System::calculate_complexQLM_6(){
     }
 }
 
+void  System::calculate_radial_functions(int nrad, int nk, double lmb){
+    //nrad is the number of radial functions
+    //for each atom
+    int nn;
+    //for now force set nrad = 1
+    //nrad = 0 will have normal q params
+    nrad = 1;
+    double gksum;
+
+    for(int ti=0; ti<nop; ti++){
+      nn = atoms[ti].n_neighbors;
+      //assign the values
+      atoms[ti].nr = nrad;
+      atoms[ti].nk = nk;
+      atoms[ti].lmb = lmb;
+
+      for(int ci=0; ci<nn; ci++){
+          //for each neighbor - calculate the cheb fiunctions
+          atoms[ti].calculate_gks(atoms[ti].neighbordist[ci]);
+          //gks are calculated - now we need to sum gksum
+          gksum = 0.0;
+          for(int i=1; i<nk; i++){
+            gksum += atoms[ti].gks[i];
+          }
+          atoms[ti].neighborweight[ci] = gksum;
+      }
+    }
+}
 //calculation of any complex qval
 void System::calculate_q(vector <int> qs){
 
