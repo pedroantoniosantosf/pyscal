@@ -44,6 +44,7 @@ Highlights
 ----------
 
 * fast and efficient calculations using C++ and expansion using python.
+* compatible with popular codes like `ASE <https://wiki.fysik.dtu.dk/ase/>`_ and `MDTraj <http://mdtraj.org>`_.
 * calculation of Steinhardt's order parameters and their `averaged version <https://aip.scitation.org/doi/full/10.1063/1.2977970>`_ and `disorder parameters <https://doi.org/10.1063/1.3656762>`_.
 * links with `Voro++ <http://math.lbl.gov/voro++/>`_ code, for calculation of `Steinhardt parameters weighted using face area of Voronoi polyhedra <https://aip.scitation.org/doi/full/10.1063/1.4774084>`_.
 * classification of atoms as `solid or liquid <https://link.springer.com/chapter/10.1007/b99429>`_.
