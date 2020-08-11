@@ -1,3 +1,6 @@
+pyscal team
+===========
+
 Developers
 ----------
 

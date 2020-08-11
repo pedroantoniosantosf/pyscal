@@ -44,7 +44,7 @@ Installation using pip
 
 pyscal is not available on pip directly. However pyscal can be installed using pip by
 
-.. code::console
+.. code:: console
 
     pip install git+https://github.com/srmnitc/pyscal
 

@@ -96,8 +96,8 @@ News and updates
 
     news
 
-pyscal reference
-----------------
+API reference
+-------------
 
 .. toctree::
 
@@ -110,16 +110,19 @@ Support, contributing and extending
 .. toctree::
 
     extending
-    helpandsupport
-    common_issues
-    codeofconduct
 
-Credits
--------
+Citing the code
+---------------
 
 .. toctree::
 
     citing
+
+Team
+----
+
+.. toctree::
+
     acknowledgements
 
 License

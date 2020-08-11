@@ -1,5 +1,5 @@
-pyscal reference
-================
+API reference
+=============
 
 .. toctree::
    :maxdepth: 4
