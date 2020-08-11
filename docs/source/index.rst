@@ -112,6 +112,7 @@ Support, contributing and extending
     extending
     helpandsupport
     common_issues
+    codeofconduct
 
 Credits
 -------
