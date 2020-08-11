@@ -31,7 +31,7 @@
    :width: 20 %
    
    
-.. image:: docs/_static/pyscal_logo1.png
+.. image:: docs/_static/logo_small.png
    :width: 100
    :align: center 
    
