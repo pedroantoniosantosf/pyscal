@@ -32,7 +32,7 @@
    
    
 .. image:: docs/_static/logo_small.png
-   :width: 100
+   :width: 80
    :align: center 
    
 pyscal - python Structural Environment Calculator
