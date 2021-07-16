@@ -59,10 +59,12 @@ extensions = [
 html_theme = 'furo'
 #html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
-html_logo = "../_static/pyscal_logo1.png"
 html_theme_options = {
     'logo_only' : True,
     'canonical_url' : 'https://pyscal.readthedocs.io/',
+    "light_logo": "../_static/pyscal_logo1.png",
+    "dark_logo": "../_static/pyscal_logo2.png",
+
 }
 
 html_extra_path = ['../_static']
